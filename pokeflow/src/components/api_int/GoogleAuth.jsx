@@ -7,7 +7,7 @@ const GoogleAuth = () => {
 
   useEffect(() => {
     const CLIENT_ID = "415758528604-es4v53bag2qoke0aaclklf1jrfaosg1l.apps.googleusercontent.com";
-    const REDIRECT_URI = "https://f324-2a09-bac5-3afc-7eb-00-ca-15c.ngrok-free.app/google_int"; // Match exactly with Google Console
+    const REDIRECT_URI = "https://a819-103-104-226-58.ngrok-free.app/google_int"; // Match exactly with Google Console
     const SCOPE = "https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.file";
 
     // Generate Google OAuth URL

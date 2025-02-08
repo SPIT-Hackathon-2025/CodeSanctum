@@ -63,7 +63,7 @@ const Dashboard = () => {
                     <Table sx={{ minWidth: 700 }} aria-label="customized table">
                         <TableHead>
                             <TableRow>
-                                <StyledTableCell className='header'>Dessert (100g serving)</StyledTableCell>
+                                <StyledTableCell>Dessert (100g serving)</StyledTableCell>
                                 <StyledTableCell align="right">Calories</StyledTableCell>
                                 <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
                                 <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>

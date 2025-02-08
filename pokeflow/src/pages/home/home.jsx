@@ -4,6 +4,7 @@ import Lottie from "lottie-react";
 import animation from "./landingAnimation.json"
 import { motion } from 'framer-motion'
 import Typewriter from 'typewriter-effect';
+import Gif1 from "./gif1.json";
 
 const borderAnimation = {
     // borderImage: [
@@ -52,11 +53,16 @@ function Home() {
                     </div>
                     <p className='desc'>Connect your favorite apps, automate tasks, and save hours of manual work all with a simple drag-and-drop interface.</p>
                 </div>
-                <motion.div className='lottie'
-                // animate={borderAnimation}
-                >
-                    <Lottie animationData={animation} loop={true} />
-                </motion.div>
+                <div className='parent-lottie'>
+                    <motion.div className='lottie' 
+                    // animate={borderAnimation}
+                    >
+                        <Lottie animationData={Gif1} loop={true} 
+                        
+                        />
+                    </motion.div>
+                </div>
+
             </div>
         </div>
     );

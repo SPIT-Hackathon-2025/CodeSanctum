@@ -102,12 +102,15 @@ h1 {
     -webkit-animation-direction: alternate;
 }
 
+
 .lottie {
-    width: 40vw;
-    padding: 10px 20px;
+    width: 40vw; /* Reduce width so there's space to move */
+    padding: 10px;
     border: 4px solid transparent;
     border-radius: 20px;
+    margin-left: auto; /* Pushes it to the right */
 }
+
 
 @media (max-width: 768px) {
     .main {
