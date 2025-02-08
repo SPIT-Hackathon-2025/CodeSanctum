@@ -10,7 +10,7 @@ export default () => {
   };
 
   return (
-    <aside className='sidebar-2 w-[20%] h-[100%] text-white'>
+    <aside className='sidebar-2  w-[17%] h-[100%] text-white'>
       <div className="description">You can drag these nodes to the pane on the right.</div>
       <div className="dndnode input" onDragStart={(event) => onDragStart(event, 'input')} draggable>
         <button className='flow-btn'>Start Workflow</button>

@@ -33,7 +33,7 @@ function Home() {
                 className="navbar">
                 <img src="../src/assets/image.png" className="logo opacity-80" alt="Reelx Logo" />
                 {/* <a href="/dashboard" className='poke px-5'>Login</a> */}
-                <a href="/dashboard" className='dash poke px-10 py-3  border border-gray-300 rounded-lg mr-2'>Dashboard</a>
+                <a href="/dashboard" className='dash poke px-4 py-3 border border-gray-300 rounded-lg mr-2'>Dashboard</a>
 
             </motion.div>
             <div className="main">

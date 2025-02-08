@@ -7,8 +7,12 @@ import SignInPage from "./Signin"
 import Dashboard from './pages/dashboard/dashboard';
 import AddDashboard from './pages/dashboard/Add';
 import DnDFlowWrapper from './components/workflow/workflow';
-import Google_int from './components/api_int/google_int';
 // import Workflow from './workflow';
+import { GoogleProvider } from "./components/api_int/GoogleContext";
+import GoogleAuth from "./components/api_int/GoogleAuth";
+import GoogleButton from "./components/api_int/GoogleButton";
+import GmailAttachmentViewer from './pages/gmail/gmail';
+
 function NotFound() {
   return <h1>404 - Page Not Found</h1>;
 }
@@ -20,6 +24,7 @@ function RedirectAfterSignIn() {
 
 function App() {
   return (
+    <GoogleProvider>
       <Router>
         <SignedOut>
           <Routes>
@@ -33,7 +38,8 @@ function App() {
         <SignedIn>
           <RedirectAfterSignIn />
           <Routes>
-            <Route path="/google_int" element={<Google_int/>} />
+          <Route path="/google_int" element={<GoogleAuth />} />
+          <Route path="/email" element={<GmailAttachmentViewer />} />
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<>hello</>} />
             <Route path="/dashboard" element={<Dashboard/>} />
@@ -42,6 +48,7 @@ function App() {
           </Routes>
         </SignedIn>
       </Router>
+      </GoogleProvider>
   );
 }
 

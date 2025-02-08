@@ -39,80 +39,142 @@
 // // app.listen(PORT, '10.112.9.12', () => {
 // //     console.log(`Server running on port ${PORT}`);
 // //   });
+// const express = require("express");
+// const { google } = require("googleapis");
+// const cors = require("cors");
+// require("dotenv").config();
+
+// const app = express();
+// app.use(cors({ origin: "http://localhost:5173" }));
+// app.use(express.json());
+// const CLIENT_ID="415758528604-es4v53bag2qoke0aaclklf1jrfaosg1l.apps.googleusercontent.com"
+// const CLIENT_SECRET="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"
+// const REDIRECT_URI="http://localhost:5000/auth/callback"
+
+// const oauth2Client = new google.auth.OAuth2(
+//   "415758528604-es4v53bag2qoke0aaclklf1jrfaosg1l.apps.googleusercontent.com",
+//   "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",
+//   "http://localhost:5000/auth/callback"
+// );
+
+
+
+// // Step 1: Get Google OAuth URL
+// app.get("/auth/google", (req, res) => {
+//   const authUrl = oauth2Client.generateAuthUrl({
+//     access_type: "offline",
+//     scope: [
+//       "https://www.googleapis.com/auth/gmail.readonly",
+//       "https://www.googleapis.com/auth/gmail.modify",
+//       "https://www.googleapis.com/auth/drive.file",
+//     ],
+//   });
+//   res.json({ url: authUrl });
+// });
+
+// // Step 2: Exchange code for access token
+// app.get("/auth/callback", async (req, res) => {
+//   const { code } = req.query;
+//   try {
+//     const { tokens } = await oauth2Client.getToken(code);
+//     oauth2Client.setCredentials(tokens);
+//     res.json(tokens);
+//   } catch (error) {
+//     res.status(500).json({ error: "Authentication failed" });
+//   }
+// });
+
+// // Step 3: Fetch unread emails
+// app.get("/emails", async (req, res) => {
+//   try {
+//     const gmail = google.gmail({ version: "v1", auth: oauth2Client });
+//     const response = await gmail.users.messages.list({
+//       userId: "me",
+//       q: "is:unread",
+//     });
+//     res.json(response.data.messages || []);
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to fetch emails" });
+//   }
+// });
+
+// // Step 4: Fetch email attachments
+// app.get("/emails/:id/attachments", async (req, res) => {
+//   try {
+//     const gmail = google.gmail({ version: "v1", auth: oauth2Client });
+//     const { id } = req.params;
+//     const email = await gmail.users.messages.get({ userId: "me", id });
+//     const parts = email.data.payload.parts || [];
+
+//     const attachments = parts.filter(
+//       (part) => part.filename && part.body.attachmentId
+//     );
+//     res.json(attachments);
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to fetch attachments" });
+//   }
+// });
+
+// // Start the server
+// app.listen(5000, () => console.log("Server running on port 5000"));
 const express = require("express");
 const { google } = require("googleapis");
+const fs = require("fs");
 const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-app.use(cors({ origin: "http://localhost:5173" }));
-app.use(express.json());
-const CLIENT_ID="415758528604-es4v53bag2qoke0aaclklf1jrfaosg1l.apps.googleusercontent.com"
-const CLIENT_SECRET="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"
-const REDIRECT_URI="http://localhost:5000/auth/callback"
+app.use(cors());
 
-const oauth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
+const SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"];
+const credentials = require("./credentials.json");
+
+const auth = new google.auth.JWT(
+  credentials.client_email,
+  null,
+  credentials.private_key,
+  SCOPES
 );
 
+const gmail = google.gmail({ version: "v1", auth });
 
-// Step 1: Get Google OAuth URL
-app.get("/auth/google", (req, res) => {
-  const authUrl = oauth2Client.generateAuthUrl({
-    access_type: "offline",
-    scope: [
-      "https://www.googleapis.com/auth/gmail.readonly",
-      "https://www.googleapis.com/auth/gmail.modify",
-      "https://www.googleapis.com/auth/drive.file",
-    ],
-  });
-  res.json({ url: authUrl });
-});
-
-// Step 2: Exchange code for access token
-app.get("/auth/callback", async (req, res) => {
-  const { code } = req.query;
+// Fetch latest email with an attachment
+app.get("/get-attachment", async (req, res) => {
   try {
-    const { tokens } = await oauth2Client.getToken(code);
-    oauth2Client.setCredentials(tokens);
-    res.json(tokens);
-  } catch (error) {
-    res.status(500).json({ error: "Authentication failed" });
-  }
-});
-
-// Step 3: Fetch unread emails
-app.get("/emails", async (req, res) => {
-  try {
-    const gmail = google.gmail({ version: "v1", auth: oauth2Client });
-    const response = await gmail.users.messages.list({
+    const messages = await gmail.users.messages.list({
       userId: "me",
-      q: "is:unread",
+      maxResults: 1, // Fetch recent 5 emails
     });
-    res.json(response.data.messages || []);
+
+    const messageId = messages.data.messages[0].id;
+    const message = await gmail.users.messages.get({
+      userId: "me",
+      id: messageId,
+    });
+
+    const attachmentPart = message.data.payload.parts.find((part) => part.body.attachmentId);
+    if (!attachmentPart) {
+      return res.status(404).json({ message: "No attachment found" });
+    }
+
+    const attachmentId = attachmentPart.body.attachmentId;
+    const attachment = await gmail.users.messages.attachments.get({
+      userId: "me",
+      messageId: messageId,
+      id: attachmentId,
+    });
+
+    const fileData = attachment.data.data;
+    const buffer = Buffer.from(fileData, "base64");
+    
+    fs.writeFileSync(`./downloads/${attachmentPart.filename}`, buffer);
+    res.json({ message: "Attachment saved!", filename: attachmentPart.filename });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch emails" });
+    console.error("Error fetching attachment:", error);
+    res.status(500).json({ message: "Error fetching attachment" });
   }
 });
 
-// Step 4: Fetch email attachments
-app.get("/emails/:id/attachments", async (req, res) => {
-  try {
-    const gmail = google.gmail({ version: "v1", auth: oauth2Client });
-    const { id } = req.params;
-    const email = await gmail.users.messages.get({ userId: "me", id });
-    const parts = email.data.payload.parts || [];
-
-    const attachments = parts.filter(
-      (part) => part.filename && part.body.attachmentId
-    );
-    res.json(attachments);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch attachments" });
-  }
+app.listen(5000, () => {
+  console.log("Server running on port 5000");
 });
-
-// Start the server
-app.listen(5000, () => console.log("Server running on port 5000"));

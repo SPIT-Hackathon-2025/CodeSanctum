@@ -10,6 +10,6 @@ export default defineConfig({
   ],
   server: {
     host: true,
-    // allowedHosts: ["7982-103-124-122-210.ngrok-free.app"] // Replace with your ngrok URL
+    allowedHosts: ["f324-2a09-bac5-3afc-7eb-00-ca-15c.ngrok-free.app"] // Replace with your ngrok URL
   }
 })
