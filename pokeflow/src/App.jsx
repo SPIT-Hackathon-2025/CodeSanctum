@@ -4,6 +4,8 @@ import './App.css';
 import SignUpPage from './sign-up';
 import Home from './pages/home/home';
 import SignInPage from "./Signin"
+import Dashboard from './pages/dashboard/dashboard';
+import AddDashboard from './pages/dashboard/Add';
 // import Workflow from './workflow';
 
 
@@ -33,6 +35,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<>hello</>} />
+            <Route path="/dashboard" element={<Dashboard/>} />
+            <Route path="/dashboard/add" element={<AddDashboard/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SignedIn>

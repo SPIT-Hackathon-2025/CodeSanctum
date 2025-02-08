@@ -1,17 +1,24 @@
 body {
-    background-color: black;
+    background-color:black;
 }
 
 .App {}
 
 .navbar {
-    height: 100px;
-    background-color: black;
-    border-bottom: solid 4px white;
+    height: 80px;
+    background-color: rgb(34, 32, 32);
+    /* border-bottom: solid 4px white; */
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: center;
     gap: 20px;
+}
+.dash{
+    color: #efdf9f;
+    position: absolute;
+    right: 0;
+    
 }
 
 .logo {
@@ -23,19 +30,25 @@ body {
 }
 
 h1 {
-    font-size: 70px;
+    font-size: 40px;
     font-weight: bold;
     letter-spacing: 5px;
     text-transform: uppercase;
-    color: hsl(0, 0%, 30%);
-    background: linear-gradient(to right,
+    /* color: hsl(0, 0%, 30%); */
+    /* background: linear-gradient(to right,
             hsl(0, 0%, 30%) 0,
             hsl(0, 0%, 100%) 10%,
             hsl(0, 0%, 30%) 20%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 3s infinite linear;
+    -webkit-text-fill-color: transparent; */
+    /* animation: shine 3s infinite linear; */
     padding-right: 30px;
+
+}
+
+.desc{
+    font-size: 20px;
+    color: #efdf9f;
 }
 
 .main {
@@ -50,6 +63,7 @@ h1 {
     color: white;
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
 @keyframes shine {
@@ -72,7 +86,7 @@ h1 {
     }
 }
 
-/* typewriter-container" style={{ fontSize: "22px", fontWeight: "bold", color: "#FFFFFF", textShadow: "1px 1px 3px rgba(0,0,0,0.3)" */
+/* typewriter-container " style={{ fontSize: "22px", fontWeight: "bold", color: "#FFFFFF", textShadow: "1px 1px 3px rgba(0,0,0,0.3)" */
 .typewriter-container {
     font-size: 22px;
     font-weight: bold;
