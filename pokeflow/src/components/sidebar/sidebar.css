@@ -1,7 +1,7 @@
-.sidebar{
+.sidebar {
     background-color: rgb(34, 32, 32);
     color: white;
-    padding: 20px ;
+    padding: 20px;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -9,12 +9,24 @@
     gap: 35px;
 }
 
-.dash-items{
+.dash-items {
     color: #efdf9f;
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
+    gap: 25px;
+}
+.dash-1{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.content{
+    display: flex;
+    align-items:center;
+    gap:10px;
+    width: 100%;
 }

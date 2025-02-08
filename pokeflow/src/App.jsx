@@ -6,15 +6,15 @@ import Home from './pages/home/home';
 import SignInPage from "./Signin"
 import Dashboard from './pages/dashboard/dashboard';
 import AddDashboard from './pages/dashboard/Add';
+import DnDFlowWrapper from './components/workflow/workflow';
+import Google_int from './components/api_int/google_int';
 // import Workflow from './workflow';
-
-
 function NotFound() {
   return <h1>404 - Page Not Found</h1>;
 }
 function RedirectAfterSignIn() {
   const navigate = useNavigate();
-  navigate('/about');
+  navigate('/dashboard');
   return null;
 }
 
@@ -33,6 +33,7 @@ function App() {
         <SignedIn>
           <RedirectAfterSignIn />
           <Routes>
+            <Route path="/google_int" element={<Google_int/>} />
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<>hello</>} />
             <Route path="/dashboard" element={<Dashboard/>} />
