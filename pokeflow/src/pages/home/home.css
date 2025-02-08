@@ -1,25 +1,63 @@
 body {
-    background-color:black;
+    background-color:#6b4e2f;
 }
 
 .App {}
 
 .navbar {
     height: 80px;
-    background-color: rgb(34, 32, 32);
+    background-color:#F1E0C6;
     /* border-bottom: solid 4px white; */
     display: flex;
+    border-radius: 5px;
     position: relative;
     align-items: center;
     justify-content: center;
     gap: 20px;
+
 }
-.dash{
-    color: #efdf9f;
+
+.heading{
+    color: #775837;
+    font-family: 'Alata', sans-serif
+
+
+}
+
+.tagline{
+    font-size: xxx-large; /* Bigger than large */
+
+}
+
+.fontall{
+    font-family: 'Alata', sans-serif
+
+}
+
+.dash {
+    color: #775837;
     position: absolute;
     right: 0;
-    
+    display: inline-block; /* Make it inline so the underline works properly */
+    padding-bottom: 3px; /* Adds space between the text and the underline */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
+
+.dash::after {
+    content: "";
+    display: block;
+    height: 1px; /* Thinner underline */
+    background-color: #775837;
+    width: 0;
+    transition: width 0.3s ease; /* Makes the underline appear gradually */
+}
+
+.dash:hover::after {
+    width: 100%; /* Underline expands to full width on hover */
+}
+
+
+
 
 .logo {
     height: 50px;
@@ -32,8 +70,6 @@ body {
 h1 {
     font-size: 40px;
     font-weight: bold;
-    letter-spacing: 5px;
-    text-transform: uppercase;
     /* color: hsl(0, 0%, 30%); */
     /* background: linear-gradient(to right,
             hsl(0, 0%, 30%) 0,
@@ -48,7 +84,7 @@ h1 {
 
 .desc{
     font-size: 20px;
-    color: #efdf9f;
+    color: #F1E0C6;
 }
 
 .main {
@@ -90,7 +126,7 @@ h1 {
 .typewriter-container {
     font-size: 22px;
     font-weight: bold;
-    color: white;
+    color: #F1E0C6;
 }
 
 .blink {

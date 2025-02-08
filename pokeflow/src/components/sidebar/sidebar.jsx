@@ -19,18 +19,18 @@ const Sidebar = () => {
         while (!hasAttachments) {
             console.log("Checking for new emails...");
             const emails = await fetchEmails(token);
-            
+
             const emailWithAttachment = emails.find(email => email.attachments?.length > 0);
-            
+
             if (emailWithAttachment) {
                 hasAttachments = true;
                 console.log("Attachment found! Downloading...");
-                
+
                 // Download all attachments
                 for (const attachment of emailWithAttachment.attachments) {
                     await downloadAttachment(token, emailWithAttachment.id, attachment.id, attachment.filename);
                 }
-                
+
                 alert("Attachment downloaded successfully!");
                 setWaitingForAttachment(false);
             } else {
@@ -63,13 +63,20 @@ const Sidebar = () => {
                     </div>
                     <FaAngleRight className='pt-[6px]' size={26} />
                 </a>
-                <button onClick={handleMailClick} className='dash-1'>
+                <a href="/email" className='dash-1'>
                     <div className='content'>
                         <IoMdMail size={24} />
                         Mail
                     </div>
                     <FaAngleRight className='pt-[6px]' size={26} />
-                </button>
+                </a>
+                {/* <button onClick={handleMailClick} className='dash-1'>
+                    <div className='content'>
+                        <IoMdMail size={24} />
+                        Mail
+                    </div>
+                    <FaAngleRight className='pt-[6px]' size={26} />
+                </button> */}
             </div>
             {waitingForAttachment && <p className="text-yellow-400 text-sm mt-2">Waiting for email with attachment...</p>}
         </div>

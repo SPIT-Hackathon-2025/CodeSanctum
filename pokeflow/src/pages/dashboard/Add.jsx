@@ -12,6 +12,7 @@ const AddDashboard = () => {
                     Add Workflow
                 </div>
                 <DnDFlowWrapper />
+            
             </div>
         </div>
     )

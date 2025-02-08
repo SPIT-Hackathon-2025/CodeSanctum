@@ -6,12 +6,14 @@ import Home from './pages/home/home';
 import SignInPage from "./Signin"
 import Dashboard from './pages/dashboard/dashboard';
 import AddDashboard from './pages/dashboard/Add';
-import DnDFlowWrapper from './components/workflow/workflow';
+import AddDashboard2 from './pages/dashboard/add2';
+// import DnDFlowWrapper from './components/workflow/workflow';
 // import Workflow from './workflow';
 import { GoogleProvider } from "./components/api_int/GoogleContext";
 import GoogleAuth from "./components/api_int/GoogleAuth";
-import GoogleButton from "./components/api_int/GoogleButton";
-import GmailAttachmentViewer from './pages/gmail/gmail';
+import Gmail from './pages/gmail/gmail';
+// import GoogleButton from "./components/api_int/GoogleButton";
+// import GmailAttachmentViewer from './pages/gmail/gmail';
 
 function NotFound() {
   return <h1>404 - Page Not Found</h1>;
@@ -39,11 +41,13 @@ function App() {
           <RedirectAfterSignIn />
           <Routes>
           <Route path="/google_int" element={<GoogleAuth />} />
-          <Route path="/email" element={<GmailAttachmentViewer />} />
+          <Route path="/email" element={<Gmail/>} />
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<>hello</>} />
             <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="/dashboard/add" element={<AddDashboard/>} />
+            <Route path="/dashboard/add2" element={<AddDashboard2/>} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SignedIn>

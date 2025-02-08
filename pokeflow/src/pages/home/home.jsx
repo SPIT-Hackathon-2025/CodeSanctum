@@ -32,14 +32,15 @@ function Home() {
             <motion.div
                 //   animate={borderAnimation} 
                 className="navbar">
-                <img src="../src/assets/image.png" className="logo opacity-80" alt="Reelx Logo" />
+                <h2 className="heading text-4xl font-bold">taskify</h2>
+                {/* <img src="../src/assets/image.png" className="logo opacity-80" alt="Reelx Logo" /> */}
                 {/* <a href="/dashboard" className='poke px-5'>Login</a> */}
-                <a href="/dashboard" className='dash poke px-4 py-3 border border-gray-300 rounded-lg mr-2'>Dashboard</a>
+                <a href="/dashboard" className='dash fontall px-4 py-3 mr-2'>Dashboard</a>
 
             </motion.div>
             <div className="main">
                 <div className='main-text'>
-                    <h1 className='poke'>PokeFlow</h1>
+                    <h1 className='fontall text-8xl tagline'>Tasks in Line, Every Time!</h1>
 
                     <div className="typewriter-container ">
                         <Typewriter

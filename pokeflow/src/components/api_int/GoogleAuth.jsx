@@ -8,7 +8,7 @@ const GoogleAuth = () => {
   useEffect(() => {
     const CLIENT_ID = "415758528604-es4v53bag2qoke0aaclklf1jrfaosg1l.apps.googleusercontent.com";
     const REDIRECT_URI = "https://a819-103-104-226-58.ngrok-free.app/google_int"; // Match exactly with Google Console
-    const SCOPE = "https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.file";
+    const SCOPE = "https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/calendar.events";
 
     // Generate Google OAuth URL
     const url = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPE}&response_type=token`;
@@ -27,8 +27,8 @@ const GoogleAuth = () => {
   }, [navigate]);
 
   return (
-    <div className="h-[100vh] w-[100vw] text-white">
-      <h2>Google Authentication</h2>
+    <div className=" text-white">
+      {/* <h2>Google Authentication</h2> */}
       <a href={authUrl}>
         <button>Login with Google</button>
       </a>

@@ -58,6 +58,10 @@ const Dashboard = () => {
                         <IoIosAddCircle size={23} />
                         Add
                     </a>
+                    <a href='/dashboard/add2' className='add-dash rounded-md w-[80px] text-center px-3 py-2 bg-white text-black'>
+                        <IoIosAddCircle size={23} />
+                        Add2
+                    </a>
                 </div>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 700 }} aria-label="customized table">

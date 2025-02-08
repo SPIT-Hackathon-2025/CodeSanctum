@@ -1,6 +1,6 @@
 .sidebar {
-    background-color:black;
-    color: white;
+    background-color:#F1E0C6;
+    color: #6b4e2f;
     padding: 20px;
     display: flex;
     justify-content: start;
@@ -10,7 +10,7 @@
 }
 
 .dash-items {
-    color: #efdf9f;
+    color: #6b4e2f;
     width: 100%;
     display: flex;
     flex-direction: column;

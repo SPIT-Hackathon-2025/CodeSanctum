@@ -2,6 +2,115 @@ import axios from "axios";
 
 // Gmail API Base URL
 const GMAIL_API_URL = "https://www.googleapis.com/gmail/v1/users/me";
+export const addEventToCalendar = async (token, event) => {
+    const response = await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(event),
+    });
+
+    return await response.json();
+};
+
+  
+export const uploadToDrive = async (token, file, filename) => {
+    const metadata = {
+        name: filename,
+        mimeType: file.type,
+    };
+
+    const formData = new FormData();
+    formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+    formData.append("file", file);
+
+    const response = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+    });
+
+    return await response.json();
+};
+
+export const writeToSheet = async (token, spreadsheetId, values) => {
+    const range = "Sheet1!A:B"; // Adjust range if needed
+
+    try {
+        const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ values }),
+        });
+
+        if (!response.ok) {
+            console.error("Error writing to Google Sheets:", response.status, response.statusText);
+            return null;
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Fetch error:", error);
+        return null;
+    }
+};
+
+
+// export const uploadToDrive = async (token, fileName, fileData) => {
+//     const metadata = {
+//         name: fileName,
+//         mimeType: "application/octet-stream"
+//     };
+
+//     const formData = new FormData();
+//     formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+//     formData.append("file", new Blob([fileData], { type: "application/octet-stream" }));
+
+//     try {
+//         const response = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+//             method: "POST",
+//             headers: { Authorization: `Bearer ${token}` },
+//             body: formData
+//         });
+
+//         const data = await response.json();
+//         console.log("Drive upload response:", data);
+//         return data.id; // Return file ID
+//     } catch (error) {
+//         console.error("Error uploading file to Drive:", error);
+//         return null;
+//     }
+// };
+// export const writeToSheet = async (token, values) => {
+//     const spreadsheetId = "YOUR_SPREADSHEET_ID"; // Replace with your Google Sheets ID
+//     const range = "Sheet1!A1:B1"; // Adjust range if needed
+
+//     const body = {
+//         values: values
+//     };
+
+//     try {
+//         const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW`, {
+//             method: "POST",
+//             headers: {
+//                 "Authorization": `Bearer ${token}`,
+//                 "Content-Type": "application/json"
+//             },
+//             body: JSON.stringify(body)
+//         });
+
+//         const data = await response.json();
+//         console.log("Sheet update response:", data);
+//         return data;
+//     } catch (error) {
+//         console.error("Error writing to Google Sheets:", error);
+//     }
+// };
 
 // Function to fetch unread emails with attachments
 export const fetchEmails = async (accessToken) => {
