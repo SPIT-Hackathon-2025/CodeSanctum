@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import './App.css';
 import SignUpPage from './sign-up';
-import Home from './home';
-import SignInPage from "./Signin" 
+import Home from './pages/home/home';
+import SignInPage from "./Signin"
 // import Workflow from './workflow';
 
 
@@ -18,25 +18,25 @@ function RedirectAfterSignIn() {
 
 function App() {
   return (
-    <Router>
-      <SignedOut>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/sign-in" element={<SignInPage/>} />
-          <Route path="/sign-up" element={<SignUpPage />} />
-          <Route path="*" element={<Navigate to="/sign-in" />} />
-        </Routes>
-      </SignedOut>
+      <Router>
+        <SignedOut>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="*" element={<Navigate to="/sign-in" />} />
+          </Routes>
+        </SignedOut>
 
-      <SignedIn>
-        <RedirectAfterSignIn />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<>hello</>} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </SignedIn>
-    </Router>
+        <SignedIn>
+          <RedirectAfterSignIn />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<>hello</>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </SignedIn>
+      </Router>
   );
 }
 
