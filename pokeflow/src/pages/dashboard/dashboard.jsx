@@ -13,8 +13,9 @@ import './dashboard.css';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: "gray",
-        color: theme.palette.common.white,
+        backgroundColor: "#F1E0C6",
+        color: "#6b4e2f",
+        fontWeight: "bold"
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
@@ -59,8 +60,8 @@ const Dashboard = () => {
                 <div className='w-[100%] font-bold mb-10 flex justify-start items-center text-3xl text-[#F1E0C6]'>
                     Dashboard
                 </div>
-                <div className='add-btn w-[100%] mb-10 flex justify-end items-center'>
-                    <a href='/dashboard/add' className='add-dash rounded-md w-[80px] text-center px-3 py-2 bg-[#6b4e2f] text-black'>
+                <div className='add-btn  w-[100%] mb-10 flex justify-end items-center'>
+                    <a href='/dashboard/add' className='add-dash rounded-md w-[80px] text-center px-3 py-2 bg-[#F1E0C6]'>
                         <IoIosAddCircle size={23} />
                         Add
                     </a>
@@ -73,6 +74,7 @@ const Dashboard = () => {
                                 <StyledTableCell align="left">Flow 1</StyledTableCell>
                                 <StyledTableCell align="left">Flow 2</StyledTableCell>
                                 <StyledTableCell align="left">Flow 3</StyledTableCell>
+                                <StyledTableCell align="left">Flow 4</StyledTableCell>
                                 <StyledTableCell align="left">Created by</StyledTableCell>
                             </TableRow>
                         </TableHead>
@@ -86,6 +88,7 @@ const Dashboard = () => {
                                         <StyledTableCell align="left">{workflow.flow1 || "-"}</StyledTableCell>
                                         <StyledTableCell align="left">{workflow.flow2 || "-"}</StyledTableCell>
                                         <StyledTableCell align="left">{workflow.flow3 || "-"}</StyledTableCell>
+                                        <StyledTableCell align="left">{workflow.flow4 || "-"}</StyledTableCell>
                                         <StyledTableCell align="left">{workflow.created_by}</StyledTableCell>
                                     </StyledTableRow>
                                 ))

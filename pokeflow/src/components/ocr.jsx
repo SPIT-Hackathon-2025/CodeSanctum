@@ -1,173 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Tesseract from "tesseract.js";
-import moment from "moment"; // Install moment.js for date validation: npm install moment
+import moment from "moment"; 
 import axios from "axios";
-import Modal from "react-modal";
 import { toast } from "react-hot-toast";
+import './ocr.css'
 
-const ItemModal = ({ show, setShow }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    unit_id: "",
-    price: "",
-    quantity: "",
-    rsc_id: "0",
-    created_by: 1,
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const accountData = localStorage.getItem("account");
-    const account = accountData ? JSON.parse(accountData) : null;
-    const token = account?.token || ""; // Use optional chaining and default value
-
-    console.log(token || "Token not found in localStorage");
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/inventory/raw-items",
-        { ...formData },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Axios automatically throws error for non-2xx status codes, so no need for response.ok
-      setShow(false); // Close modal on successful submission
-      if (response) {
-        alert("Item added successfully!");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return (
-    show && (
-      <Modal
-        isOpen={show}
-        onRequestClose={() => setShow(false)}
-        style={{
-          overlay: { backgroundColor: "rgba(0,0,0,0.5)" },
-          content: {
-            margin: "auto",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          },
-        }}
-      >
-        <h1>Add New Item</h1>
-        <form onSubmit={handleSubmit} style={{ width: "80%", color: "black" }}>
-          <label className="text-black">
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="text-black"
-              style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-            />
-          </label>
-
-          <label className="text-black">
-            Description:
-            <input
-              type="text"
-              name="description"
-              className="text-black"
-              value={formData.description}
-              onChange={handleChange}
-              required
-              style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-            />
-          </label>
-
-          <label className="text-black">
-            Unit ID:
-            <input
-              type="text"
-              name="unit_id"
-              className="text-black"
-              value={formData.unit_id}
-              onChange={handleChange}
-              required
-              style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-            />
-          </label>
-
-          <label className="text-black">
-            Price:
-            <input
-              type="number"
-              name="price"
-              className="text-black"
-              value={formData.price}
-              onChange={handleChange}
-              required
-              style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-            />
-          </label>
-
-          <label className="text-black">
-            Quantity:
-            <input
-              type="number"
-              name="quantity"
-              className="text-black"
-              value={formData.quantity}
-              onChange={handleChange}
-              required
-              style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-            />
-          </label>
-          <div>
-            <button
-              type="submit"
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#4CAF50",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              Submit
-            </button>
-            <button
-              type="button"
-              onClick={() => setShow(false)}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#ff4d4d",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                marginLeft: "10px",
-                cursor: "pointer",
-              }}
-            >
-              Close
-            </button>
-          </div>
-        </form>
-      </Modal>
-    )
-  );
-};
 
 const OCRScanner = () => {
   const [image, setImage] = useState(null);
@@ -195,64 +32,7 @@ const OCRScanner = () => {
       reader.readAsDataURL(file);
     }
   };
-  useEffect(() => {
-    const loadingToast = toast.loading("Fetching updates...");
-    const accountData = localStorage.getItem("account");
-    const account = accountData ? JSON.parse(accountData) : null;
-    const token = account?.token || ""; // Use optional chaining and default value
 
-    console.log(token || "Token not found in localStorage");
-
-    const getRawItems = async () => {
-      const responses = await Promise.all(
-        parsedData.items.map(async (item) => {
-          const res = await axios.post(
-            "http://localhost:3000/api/inventory/raw-items-by-name",
-            {
-              name: item.name.toLowerCase(),
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          return res.data; // Adjust based on API response structure
-        })
-      );
-      console.log(responses);
-      const res = await Promise.all(
-        responses.map(async (item, index) => {
-          console.log(item);
-
-          if (item.success == true) {
-            const res = await axios.put(
-              `http://localhost:3000/api/inventory/raw-items/${item.data.r_id}`,
-              {
-                quantity:
-                  parseInt(item.data.quantity) +
-                  parseInt(parsedData.items[index].quantity),
-              },
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
-          } else {
-            setShow(true);
-          }
-        })
-      );
-      if (res) {
-        toast.success("Item added successfully!");
-      }
-    };
-    toast.dismiss(loadingToast);
-    getRawItems();
-  }, [parsedData]);
   const handleScan = async () => {
     if (!image) {
       alert("Please upload an image first!");
@@ -280,13 +60,13 @@ const OCRScanner = () => {
       seller: "",
       date: "",
       items: [],
-      total: 0, // Initialize total as 0
+      total: 0, 
     };
 
-    // Extract seller information (assuming it's on the first line)
+    
     if (lines.length > 0) result.seller = lines[0];
 
-    // Extract date (enhanced with multiple formats)
+   
     const dateRegex =
       /\b(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4}|[A-Za-z]{3,9} \d{1,2}, \d{4})\b/;
     const dateMatch = text.match(dateRegex);
@@ -299,16 +79,16 @@ const OCRScanner = () => {
       }
     }
 
-    // Extract items (EXCLUDING words from itemsNotInclude)
-    const itemRegex = /(.+?)\s+(\d+)\s+([\d.,]+)/; // Format: Item Name  Quantity  Price
+    
+    const itemRegex = /(.+?)\s+(\d+)\s+([\d.,]+)/; 
     lines.forEach((line) => {
       const match = line.match(itemRegex);
       if (match) {
         const itemName = match[1].trim().toLowerCase();
         const quantity = match[2];
-        const price = parseFloat(match[3].replace(/,/g, "")) || 0; // Convert price to float
+        const price = parseFloat(match[3].replace(/,/g, "")) || 0; 
 
-        // Check if item name CONTAINS any excluded word
+       
         const shouldInclude = !itemsNotInclude.some((word) =>
           itemName.includes(word)
         );
@@ -320,7 +100,7 @@ const OCRScanner = () => {
             price,
           });
 
-          // **Add the price to the total**
+          
           result.total += price;
         }
       }
@@ -331,7 +111,7 @@ const OCRScanner = () => {
   };
 
   const isValidDate = (dateString) => {
-    // Validate date using moment.js or JavaScript's Date object
+    
     return moment(
       dateString,
       ["MM/DD/YYYY", "DD/MM/YYYY", "DD/MM/YY", "YYYY-MM-DD", "MMMM DD, YYYY"],
@@ -340,7 +120,7 @@ const OCRScanner = () => {
   };
 
   const formatDate = (dateString) => {
-    // Format date to a consistent output like YYYY-MM-DD
+    
     return moment(dateString, [
       "MM/DD/YYYY",
       "DD/MM/YYYY",
@@ -350,22 +130,75 @@ const OCRScanner = () => {
   };
   const [isChecked, setIsChecked] = useState(false);
 
+  const handleInventoryUpdate = async () => {
+    if (!parsedData.items || parsedData.items.length === 0) {
+      toast.error("No items found to update in inventory!");
+      return;
+    }
+
+    try {
+      
+      const inventoryResponse = await axios.get("http://localhost:5000/api/inventory/all");
+      const inventoryItems = inventoryResponse.data;
+
+      for (const scannedItem of parsedData.items) {
+        const existingItem = inventoryItems.find(
+          (invItem) => invItem.name.toLowerCase() === scannedItem.name.toLowerCase()
+        );
+
+        if (existingItem) {
+         
+          const updatedQuantity = existingItem.quantity + parseInt(scannedItem.quantity, 10);
+          await axios.put(`http://localhost:5000/api/inventory/update/${existingItem.id}`, {
+            quantity: updatedQuantity
+          });
+
+          console.log(`Updated: ${scannedItem.name} (New Quantity: ${updatedQuantity})`);
+        } else {
+         
+          await axios.post("http://localhost:5000/api/inventory/add", {
+            name: scannedItem.name,
+            quantity: parseInt(scannedItem.quantity, 10)
+          });
+
+          console.log(`Added: ${scannedItem.name} (Quantity: ${scannedItem.quantity})`);
+        }
+      }
+
+      toast.success("Inventory successfully updated!");
+    } catch (error) {
+      console.error("Error updating inventory:", error);
+      toast.error("Failed to update inventory. Please try again.");
+    }
+  };
+
+
   return (
-    <div className="p-6 max-w-4xl min-w-[35%] mx-auto bg-white shadow-lg rounded-lg">
+    <div className="p-6  max-w-4xl min-w-[35%]  mx-auto bg-white shadow-lg rounded-lg">
       <h1 className="text-3xl font-bold text-center mb-6">OCR Bill Scanner</h1>
-      <div className="mb-6">
+      <div className="mb-6 flex flex-col items-center">
         <input
           type="file"
           accept="image/*"
           onChange={handleImageUpload}
           className="mb-4 block w-full text-sm text-gray-600 border border-gray-300 rounded px-3 py-2"
         />
-        <button
-          onClick={handleScan}
-          className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
-        >
-          {loading ? "Scanning..." : "Scan Bill"}
-        </button>
+        <div>
+          <button
+            onClick={handleScan}
+            className="scan-btn"
+          >
+            {loading ? "Scanning..." : "Scan Bill"}
+          </button>
+          <button
+            onClick={handleInventoryUpdate}
+            className="bg-green-600 text-white px-4 py-2 rounded mt-4 hover:bg-green-700"
+            disabled={!parsedData.items || parsedData.items.length === 0}
+          >
+            Update Inventory
+          </button>
+        </div>
+
       </div>
 
       <div className="flex space-x-8 h-fit">
@@ -379,7 +212,6 @@ const OCRScanner = () => {
             />
           )}
         </div>
-        <ItemModal show={show} setShow={setShow} />
 
         {/* Right side: Extracted Data */}
         <div className="flex-1 h-fit">

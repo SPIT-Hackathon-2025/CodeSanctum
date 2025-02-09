@@ -3,7 +3,8 @@ const cors = require('cors');
 require('dotenv').config();
 const app = express();
 const workflowRoutes = require('./routes/workflowRoutes');
-const { authenticate } = require('./middlewares/auth');
+// const { authenticate } = require('./middlewares/auth');
+const inventoryRoutes = require('./routes/inventoryRoutes');
 
 // Allow requests from specific origin (frontend domain)
 // const allowedOrigins = ['https://shree-vidya-saraswati-pujan.netlify.app'];
@@ -22,7 +23,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Mastermind Server.');
 });
 
-
+app.use('/api/inventory', inventoryRoutes);
 app.use('/api/workflows', workflowRoutes);
 
 

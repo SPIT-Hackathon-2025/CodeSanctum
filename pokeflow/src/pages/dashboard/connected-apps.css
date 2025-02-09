@@ -1,0 +1,35 @@
+/* Features Section */
+.features {
+    text-align: center;
+    flex-wrap: wrap;
+    padding: 30px 10vw;
+    background-color: #F1E0C6;
+    color: #775837;
+    border-radius: 10px;
+    margin-top: 40px;
+    height: 460px;
+}
+
+.feature-heading {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.feature-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex-wrap: nowrap;
+    height: 200px;
+    width: 100%;
+}
+
+.feature-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 23%;
+    text-align: center;
+}

@@ -1,9 +1,21 @@
 .add-dash {
+    all: unset;
+    padding: 6px 16px;
+    background-color: #F1E0C6;
+    height: 30px;
+    text-align: center;
+    width: 70px;
+    color: #6b4e2f;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid whitesmoke;
+    border-radius: 6px;
+    cursor: pointer;
+    gap: 10px;
     display: flex;
-    /* background-color: #ffffff; */
-    /* gap: 6px; */
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+
 }
 
 .body {

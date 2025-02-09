@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Gmail API Base URL
 const GMAIL_API_URL = "https://www.googleapis.com/gmail/v1/users/me";
 export const addEventToCalendar = async (token, event) => {
     const response = await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
@@ -34,9 +33,30 @@ export const uploadToDrive = async (token, file, filename) => {
 
     return await response.json();
 };
+async function getSpreadsheetId(token) {
+    const url = "https://www.googleapis.com/drive/v3/files?q=mimeType='application/vnd.google-apps.spreadsheet'&fields=files(id,name)";
+    
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+    });
+
+    const data = await response.json();
+    
+    if (data.files.length > 0) {
+        console.log("User's Google Sheets:", data.files);
+        return data.files[0].id;  // Return the first spreadsheet's ID
+    } else {
+        console.log("No spreadsheets found.");
+        return null;
+    }
+}
 
 export const writeToSheet = async (token, spreadsheetId, values) => {
-    const range = "Sheet1!A:B"; // Adjust range if needed
+    const range = "Sheet1!A:B"; 
 
     try {
         const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW`, {
