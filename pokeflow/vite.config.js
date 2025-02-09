@@ -9,7 +9,7 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    host: true,
-    allowedHosts: ["a819-103-104-226-58.ngrok-free.app"] // Replace with your ngrok URL
+    host: '0.0.0.0', // Allow access from network
+    port: 5173, // Ensure port is correct
   }
 })

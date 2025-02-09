@@ -1,11 +1,11 @@
-.add-dash{
+.add-dash {
     display: flex;
-    background-color: #dcc66f;
+    /* background-color: #ffffff; */
     /* gap: 6px; */
     align-items: center;
     justify-content: space-between;
 }
 
-.body{
-    background-color:  rgb(34, 32, 32);
+.body {
+    background-color: #6b4e2f;
 }

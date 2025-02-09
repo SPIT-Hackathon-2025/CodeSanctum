@@ -1,176 +1,161 @@
 body {
-    background-color:#6b4e2f;
+    background-color: #6b4e2f;
+    margin: 0;
+    font-family: 'Alata', sans-serif;
 }
 
-.App {}
-
+/* Navbar */
 .navbar {
     height: 80px;
-    background-color:#F1E0C6;
-    /* border-bottom: solid 4px white; */
+    background-color: #F1E0C6;
     display: flex;
-    border-radius: 5px;
-    position: relative;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    gap: 20px;
-
+    padding: 0 40px;
+    border-radius: 5px;
 }
 
-.heading{
+.heading {
     color: #775837;
-    font-family: 'Alata', sans-serif
-
-
-}
-
-.tagline{
-    font-size: xxx-large; /* Bigger than large */
-
-}
-
-.fontall{
-    font-family: 'Alata', sans-serif
-
+    font-size: 30px;
 }
 
 .dash {
     color: #775837;
-    position: absolute;
-    right: 0;
-    display: inline-block; /* Make it inline so the underline works properly */
-    padding-bottom: 3px; /* Adds space between the text and the underline */
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    font-size: 18px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #775837;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
 }
 
-.dash::after {
-    content: "";
-    display: block;
-    height: 1px; /* Thinner underline */
+.dash:hover {
     background-color: #775837;
-    width: 0;
-    transition: width 0.3s ease; /* Makes the underline appear gradually */
-}
-
-.dash:hover::after {
-    width: 100%; /* Underline expands to full width on hover */
-}
-
-
-
-
-.logo {
-    height: 50px;
-}
-
-.logo2 {
-    height: 25px;
-}
-
-h1 {
-    font-size: 40px;
-    font-weight: bold;
-    /* color: hsl(0, 0%, 30%); */
-    /* background: linear-gradient(to right,
-            hsl(0, 0%, 30%) 0,
-            hsl(0, 0%, 100%) 10%,
-            hsl(0, 0%, 30%) 20%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
-    /* animation: shine 3s infinite linear; */
-    padding-right: 30px;
-
-}
-
-.desc{
-    font-size: 20px;
     color: #F1E0C6;
 }
 
+/* Main Section */
 .main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 10vw;
+    padding: 40px 10vw;
 }
 
 .main-text {
-    width: 50vw;
+    width: 50%;
     color: white;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-@keyframes shine {
-    0% {
-        background-position: 0;
-    }
-
-    60% {
-        background-position: 590px;
-    }
+.tagline {
+    font-size: 60px;
 }
 
-@-webkit-keyframes blinker {
-    from {
-        opacity: 1.0;
-    }
-
-    to {
-        opacity: 0.0;
-    }
-}
-
-/* typewriter-container " style={{ fontSize: "22px", fontWeight: "bold", color: "#FFFFFF", textShadow: "1px 1px 3px rgba(0,0,0,0.3)" */
 .typewriter-container {
     font-size: 22px;
     font-weight: bold;
     color: #F1E0C6;
 }
 
-.blink {
-    text-decoration: blink;
-    -webkit-animation-name: blinker;
-    -webkit-animation-duration: 0.6s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: ease-in-out;
-    -webkit-animation-direction: alternate;
+.about-card {
+    background-color: white; /* Same as feature cards */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    text-align: center;
+    margin: 40px auto; /* Centers the card */
+    color: #775837; /* Matching the theme */
 }
 
+
+/* CTA Button */
+.cta-button {
+    /* display: inline-block; */
+    padding: 15px 30px;
+    background-color: #F1E0C6;
+    color: #775837;
+    font-size: 18px;
+    font-weight: bold;
+    width:200px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #d5c0a0;
+}
+
+/* Lottie Animation */
 
 .lottie {
-    width: 40vw; /* Reduce width so there's space to move */
-    padding: 10px;
+    width: 400px;  /* Adjust as needed */
+    height: 400px;
+    padding:0;
     border: 4px solid transparent;
     border-radius: 20px;
-    margin-left: auto; /* Pushes it to the right */
+    margin-left: auto;
 }
 
+/* Features Section */
+.features {
+    text-align: center;
+    padding: 50px 10vw;
+    background-color: #F1E0C6;
+    color: #775837;
+    border-radius: 10px;
+    margin-top: 40px;
+}
 
-@media (max-width: 768px) {
-    .main {
-        flex-direction: column;
-        height: 80vh;
-    }
+.feature-heading {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
 
-    h1 {
-        font-size: 50px;
-        text-align: center;
-        animation: shine 8s infinite linear;
-        padding: 0;
-    }
+.feature-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: nowrap;
+}
 
-    .main-text {
-        align-items: center;
-        gap: 40px;
-    }
+.feature-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 23%;
+    text-align: center;
+}
 
-    .lottie {
-        width: 100%;
-    }
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #6b4e2f;
+    color: #F1E0C6;
+}
 
-    .typewriter-container {
-        text-align: center;
-    }
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #F1E0C6;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #d4af89;
 }

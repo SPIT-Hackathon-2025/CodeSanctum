@@ -5,7 +5,9 @@
     align-items: center;
     justify-content: space-between;
 }
-
+.content1{
+    color: white;
+}
 .body{
     background-color:  rgb(34, 32, 32);
 }
